@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>بطاقتي — كل زيارة طابع، وكل مكافأة ختم</title>
+<meta name="description" content="بطاقة ولاء تعيش في محفظة جوال عميلك: كل زيارة طابع يُلصق، وكل مكافأة ختم يُضرب.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%237E1E2C'/%3E%3Crect x='7' y='5' width='18' height='22' fill='%23EFE6D2'/%3E%3Ccircle cx='16' cy='16' r='6' fill='none' stroke='%2324407A' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rakkas&family=Reem+Kufi:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   بطاقتي — «الطوابع» / The Stamp Sheet
+   Revenue-stamp philately. Zero raster: perforations, engraving
+   and postmarks are all geometry.
+   ============================================================ */
+:root{
+  --carmine:#7E1E2C; --carmine-dk:#5A1220; --carmine-lt:#A8354A;
+  --gum:#EFE6D2;     --gum-dk:#DCCFB2;
+  --ultra:#24407A;   --ochre:#C9922E;  --olive:#5C6B33;
+  --ink:#1A1712;     --ink-soft:#54483C;
+  --rule:rgba(239,230,210,.28);
+  --shop:#24407A;
+
+  --f-display:"Rakkas",serif;
+  --f-title:"Reem Kufi",sans-serif;
+  --f-body:"Amiri",serif;
+
+  --s2:.875rem; --s3:1.25rem; --s4:2rem; --s5:3.25rem; --s6:5rem;
+  --maxw:1320px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0; background:var(--carmine); color:var(--gum);
+  font-family:var(--f-body); font-size:1.125rem; line-height:1.8;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+h1,h2,h3{font-family:var(--f-title); font-weight:700; line-height:1.42; margin:0; text-wrap:balance}
+p{margin:0}
+a{color:inherit}
+img,svg{display:block; max-width:100%}
+:focus-visible{outline:3px solid var(--ochre); outline-offset:3px}
+.wrap{max-width:var(--maxw); margin-inline:auto; padding-inline:clamp(1rem,4vw,3rem)}
+
+/* ---------- the sheet's own grain ---------- */
+body::before{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.34;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(0,0,0,.05) 0 1px, transparent 1px 6px),
+    repeating-linear-gradient(90deg, rgba(0,0,0,.04) 0 1px, transparent 1px 7px);
+}
+main,header,footer{position:relative; z-index:1}
+
+/* ============================================================
+   THE PERFORATED STAMP — the page's one primitive
+   ============================================================ */
+.stamp{
+  --p:6px; --g:15px;
+  position:relative; background:var(--gum); color:var(--ink);
+  -webkit-mask:
+    radial-gradient(var(--p) at 50% 0,   #0000 97%, #000) 50% 0   / var(--g) 100% repeat-x,
+    radial-gradient(var(--p) at 50% 100%,#0000 97%, #000) 50% 100%/ var(--g) 100% repeat-x,
+    radial-gradient(var(--p) at 0 50%,   #0000 97%, #000) 0 50%   / 100% var(--g) repeat-y,
+    radial-gradient(var(--p) at 100% 50%,#0000 97%, #000) 100% 50%/ 100% var(--g) repeat-y;
+  -webkit-mask-composite:source-in;
+  mask:
+    radial-gradient(var(--p) at 50% 0,   #0000 97%, #000) 50% 0   / var(--g) 100% repeat-x,
+    radial-gradient(var(--p) at 50% 100%,#0000 97%, #000) 50% 100%/ var(--g) 100% repeat-x,
+    radial-gradient(var(--p) at 0 50%,   #0000 97%, #000) 0 50%   / 100% var(--g) repeat-y,
+    radial-gradient(var(--p) at 100% 50%,#0000 97%, #000) 100% 50%/ 100% var(--g) repeat-y;
+  mask-composite:intersect;
+}
+.stamp-inner{position:absolute; inset:calc(var(--p) + 4px); border:1.5px solid currentColor; border-radius:1px}
+.engrave{position:absolute; inset:0; pointer-events:none}
+
+/* ---------- masthead ---------- */
+.mast{border-block-end:1px solid var(--rule); background:var(--carmine-dk)}
+.mast .wrap{display:flex; align-items:center; gap:var(--s4); min-height:76px}
+.mark{font-family:var(--f-display); font-size:2rem; color:var(--gum); margin-inline-end:auto; line-height:1.6; letter-spacing:.01em}
+.mast nav{display:flex; gap:var(--s3); font-family:var(--f-title); font-size:.9rem; color:rgba(239,230,210,.8)}
+.mast nav a{text-decoration:none; padding-block:.3rem; border-block-end:1px solid transparent; transition:border-color .2s,color .2s}
+.mast nav a:hover{color:var(--ochre); border-block-end-color:var(--ochre)}
+@media (max-width:900px){.mast nav{display:none}}
+
+.btn{
+  display:inline-flex; align-items:center; gap:.6rem; font-family:var(--f-title); font-weight:700;
+  font-size:1.0625rem; padding:.9rem 1.8rem; border:0; cursor:pointer; text-decoration:none;
+  background:var(--ochre); color:var(--ink); border-radius:1px;
+  box-shadow:0 2px 5px rgba(0,0,0,.34); transition:transform .16s, box-shadow .16s;
+}
+.btn:hover{transform:translateY(-2px); box-shadow:0 6px 14px rgba(0,0,0,.36)}
+.btn:active{transform:translateY(1px); box-shadow:0 1px 3px rgba(0,0,0,.34)}
+.btn--line{background:transparent; color:var(--gum); border:1px solid var(--rule); box-shadow:none}
+.btn--line:hover{border-color:var(--ochre); color:var(--ochre)}
+
+/* ============================================================ HERO */
+.hero{padding-block:clamp(2.5rem,6vw,var(--s6))}
+.hero .wrap{display:grid; grid-template-columns:1fr .92fr; gap:clamp(2rem,5vw,4.5rem); align-items:center}
+@media (max-width:1000px){.hero .wrap{grid-template-columns:1fr; gap:var(--s5)}}
+/* Rakkas carries tall ascenders and deep descenders; 1.42 collided line to line. */
+.hero h1{font-size:clamp(2.4rem,5.2vw,4.2rem); color:var(--gum); line-height:1.62}
+.close h2,.cancel h2,.sheet h2,.wallet h2,.tiers h2{line-height:1.5}
+.hero h1 em{font-style:normal; color:var(--ochre); display:block}
+.hero .lede{margin-block-start:var(--s3); font-size:1.2rem; color:rgba(239,230,210,.9); max-width:38ch}
+.hero-actions{margin-block-start:var(--s4); display:flex; gap:var(--s3); flex-wrap:wrap; align-items:center}
+
+.overprint-ctl{margin-block-start:var(--s4); padding-block-start:var(--s3); border-block-start:1px solid var(--rule)}
+.overprint-ctl label{display:block; font-family:var(--f-title); font-size:.85rem; color:rgba(239,230,210,.82); margin-block-end:.55rem}
+.overprint-ctl input{
+  inline-size:100%; max-inline-size:22rem; background:rgba(0,0,0,.24); border:1px solid var(--rule);
+  color:var(--gum); font-family:var(--f-display); font-size:1.4rem; line-height:1.7; padding:.5rem .9rem; border-radius:1px;
+}
+.inks{display:flex; gap:.55rem; margin-block-start:var(--s3); flex-wrap:wrap}
+.ink-btn{inline-size:36px; block-size:36px; border:1px solid rgba(0,0,0,.4); border-radius:1px; cursor:pointer; padding:0; position:relative; transition:transform .15s}
+.ink-btn:hover{transform:translateY(-3px)}
+.ink-btn[aria-pressed="true"]::after{content:""; position:absolute; inset:-5px; border:1.5px solid var(--gum)}
+
+/* the hero block of four */
+.block4{display:grid; grid-template-columns:1fr 1fr; gap:clamp(.8rem,1.4vw,1.4rem)}
+.block4 .stamp{aspect-ratio:.82}
+.block4 .stamp:nth-child(1){--tint:var(--ultra)}
+.block4 .stamp:nth-child(2){--tint:var(--olive)}
+.block4 .stamp:nth-child(3){--tint:var(--ochre)}
+.block4 .stamp:nth-child(4){--tint:var(--carmine-lt)}
+.se-tenant{filter:drop-shadow(0 22px 34px rgba(0,0,0,.45))}
+.st-head{position:absolute; inset-block-start:8%; inset-inline:12%; font-family:var(--f-title);
+  font-size:.78rem; letter-spacing:.08em; color:var(--tint,var(--ultra)); text-align:center}
+.st-name{position:absolute; inset-block-start:62%; inset-inline:10%; text-align:center;
+  font-family:var(--f-display); font-size:clamp(.95rem,1.5vw,1.2rem); line-height:1.5; color:rgba(26,23,18,.62)}
+.st-foot{position:absolute; bottom:7%; left:11%; right:11%; display:flex; align-items:baseline;
+  justify-content:space-between; gap:.5rem}
+.st-val{font-family:var(--f-title); font-weight:700; font-size:clamp(.85rem,1.15vw,1.05rem);
+  color:var(--tint,var(--ultra)); white-space:nowrap}
+.st-cur{font-family:var(--f-title); font-size:.7rem; letter-spacing:.06em; color:var(--ink-soft);
+  text-align:end; line-height:1.4}
+.st-overprint{
+  position:absolute; top:44%; left:7%; right:7%; text-align:center; z-index:4;
+  font-family:var(--f-title); font-weight:700; font-size:clamp(.92rem,1.6vw,1.28rem); letter-spacing:.02em;
+  line-height:1.5; color:var(--shop); rotate:-2deg; opacity:.88;
+  mix-blend-mode:multiply;  /* ink over printing, so the engraving reads through */
+}
+@keyframes overprint{0%{opacity:0; scale:1.18; rotate:-8deg} 70%{opacity:.95; scale:.98} 100%{opacity:.92; scale:1; rotate:-2deg}}
+.printing .st-overprint{animation:overprint .42s cubic-bezier(.2,.9,.25,1) both}
+@media (prefers-reduced-motion:reduce){.printing .st-overprint{animation:none}}
+.hero-note{margin-block-start:var(--s3); font-family:var(--f-title); font-size:.82rem; color:rgba(239,230,210,.68)}
+
+/* ============================================================ THE CANCELLATION — signature interaction */
+.cancel{background:var(--gum-dk); color:var(--ink); padding-block:var(--s6)}
+/* The copy calls this the paper card in the customer's pocket, so it has to BE
+   a card: gum stock, a printed head with the shop's name, and a serial. */
+.paper-card{margin-block-start:var(--s5); max-inline-size:900px; background:var(--gum);
+  border:1px solid rgba(26,23,18,.34); padding:clamp(1rem,2.4vw,1.6rem); box-shadow:0 2px 6px rgba(0,0,0,.14)}
+.paper-card-head{display:flex; align-items:baseline; justify-content:space-between; gap:var(--s3);
+  padding-block-end:var(--s2); margin-block-end:var(--s3); border-block-end:1.5px solid rgba(26,23,18,.3)}
+.pc-shop{font-family:var(--f-display); font-size:clamp(1.2rem,2.4vw,1.75rem); line-height:1.6; color:var(--ink)}
+.pc-kind{font-family:var(--f-title); font-size:.82rem; letter-spacing:.08em; color:var(--ink-soft)}
+.paper-card-foot{display:flex; align-items:baseline; justify-content:space-between; gap:var(--s3);
+  margin-block-start:var(--s3); padding-block-start:var(--s2); border-block-start:1px dashed rgba(26,23,18,.3)}
+.pc-serial{font-family:var(--f-title); font-size:.72rem; letter-spacing:.16em; color:var(--ink-soft)}
+.cancel h2{font-size:clamp(1.8rem,3.6vw,2.8rem); color:var(--ink)}
+.cancel .sub{color:var(--ink-soft); max-width:56ch; margin-block-start:var(--s2)}
+.strip{display:grid; grid-template-columns:repeat(6,1fr); gap:clamp(.5rem,1.2vw,1rem)}
+@media (max-width:700px){.strip{grid-template-columns:repeat(3,1fr)}}
+.slot{
+  position:relative; aspect-ratio:.86; border:1.5px dashed rgba(26,23,18,.45); border-radius:2px;
+  display:grid; place-items:center; background:rgba(255,255,255,.5); transition:border-color .25s;
+}
+.slot.filled{border-style:solid; border-color:transparent; background:transparent}
+.slot .mini{position:absolute; inset:0; --p:4px; --g:11px}
+.slot .idx{font-family:var(--f-title); font-size:1.1rem; color:rgba(26,23,18,.72); display:grid; place-items:center}
+.slot .idx.is-reward{inline-size:38%}
+.slot.filled .idx{display:none}
+@keyframes affix{0%{opacity:0; scale:1.3; rotate:-10deg} 100%{opacity:1; scale:1; rotate:0deg}}
+.slot.filled .mini{animation:affix .34s cubic-bezier(.2,.9,.25,1) both}
+.slot .pm{position:absolute; inset:-8%; z-index:5; pointer-events:none; opacity:0}
+@keyframes strike{0%{opacity:0; scale:1.6; rotate:-30deg} 60%{opacity:1; scale:.95; rotate:-8deg} 100%{opacity:1; scale:1; rotate:-12deg}}
+.slot.cancelled .pm{animation:strike .5s cubic-bezier(.2,.9,.25,1) both; opacity:1}
+.slot.reward{border-color:var(--carmine)}
+@media (prefers-reduced-motion:reduce){.slot .mini,.slot .pm{animation:none !important; opacity:1}}
+.cancel-actions{margin-block-start:var(--s4); display:flex; gap:var(--s3); align-items:center; flex-wrap:wrap}
+.cancel-actions .btn{background:var(--carmine); color:var(--gum)}
+#readout{font-family:var(--f-title); font-size:.95rem; color:var(--ink)}
+#readout b{color:var(--carmine)}
+
+/* ============================================================ THE SHEET — four denominations */
+.sheet{padding-block:var(--s6)}
+.sheet h2{font-size:clamp(1.8rem,3.6vw,2.8rem)}
+.sheet .sub{color:rgba(239,230,210,.86); max-width:56ch; margin-block-start:var(--s2); margin-block-end:var(--s5)}
+.denoms{display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(1rem,2vw,1.8rem)}
+@media (max-width:960px){.denoms{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.denoms{grid-template-columns:1fr}}
+.denom{display:grid; gap:var(--s2)}
+.denom .stamp{aspect-ratio:.8; filter:drop-shadow(0 14px 22px rgba(0,0,0,.34))}
+.denom h3{font-family:var(--f-title); font-size:1.1rem; color:var(--gum)}
+.denom p{font-size:1rem; color:rgba(239,230,210,.82)}
+.denom dl{margin:0; font-family:var(--f-title); font-size:.84rem; display:grid; grid-template-columns:auto 1fr; gap:.3rem .7rem}
+.denom dt{color:rgba(239,230,210,.82)} .denom dd{margin:0; color:var(--ochre)}
+.d1{--tint:var(--ultra)} .d2{--tint:var(--olive)} .d3{--tint:var(--carmine-lt)} .d4{--tint:var(--ochre)}
+
+/* ============================================================ WALLET */
+.wallet{background:var(--carmine-dk); padding-block:var(--s6)}
+.wallet .wrap{display:grid; grid-template-columns:1fr .8fr; gap:clamp(2rem,5vw,4rem); align-items:center}
+@media (max-width:960px){.wallet .wrap{grid-template-columns:1fr}}
+.wallet h2{font-size:clamp(1.8rem,3.6vw,2.8rem)}
+.wallet p{margin-block-start:var(--s3); color:rgba(239,230,210,.88); max-width:48ch}
+.wallet ul{list-style:none; margin:var(--s4) 0 0; padding:0; display:grid; gap:var(--s2)}
+.wallet li{display:flex; gap:var(--s2); align-items:flex-start; color:rgba(239,230,210,.92); font-size:1.05rem}
+.wallet li::before{content:""; inline-size:9px; block-size:9px; background:var(--ochre); flex:none; margin-block-start:.72rem; rotate:45deg}
+
+/* ============================================================ TIERS — sheet sizes */
+.tiers{background:var(--gum); color:var(--ink); padding-block:var(--s6)}
+.tiers h2{font-size:clamp(1.8rem,3.6vw,2.8rem); color:var(--ink)}
+.tiers .sub{color:var(--ink-soft); max-width:56ch; margin-block-start:var(--s2)}
+.sizes{margin-block-start:var(--s5); display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(1.2rem,3vw,2.5rem); align-items:start}
+@media (max-width:860px){.sizes{grid-template-columns:1fr}}
+.size h3{font-family:var(--f-title); font-size:1.2rem; color:var(--ink); margin-block:var(--s2) .4rem}
+.size .plate{display:grid; gap:4px; padding:10px; border:1px solid rgba(26,23,18,.24);
+  background:rgba(255,255,255,.42); block-size:186px; grid-auto-rows:1fr}
+.plate-limit{font-family:var(--f-title); font-size:.76rem; letter-spacing:.04em; color:var(--ink-soft);
+  margin-block-start:.55rem}
+.size.s1 .plate{grid-template-columns:1fr}
+.size.s2 .plate{grid-template-columns:repeat(2,1fr)}
+.size.s3 .plate{grid-template-columns:repeat(5,1fr)}
+.size .plate i{display:block; background:var(--gum-dk); border:1px dashed rgba(26,23,18,.3)}
+.size.s2 .plate i{background:rgba(201,146,46,.42)}
+.size.s3 .plate i{background:rgba(126,30,44,.3)}
+.size ul{list-style:none; margin:var(--s2) 0 0; padding:0; display:grid; gap:.35rem; font-family:var(--f-title); font-size:.9rem; color:var(--ink-soft)}
+.size li b{color:var(--ink); font-weight:600}
+.placeholder{margin-block-start:var(--s5); font-family:var(--f-title); font-size:.9rem;
+  border:1.5px dashed var(--carmine); padding:.8rem 1rem; background:rgba(126,30,44,.07); color:var(--ink)}
+
+/* ============================================================ CLOSE */
+.close{padding-block:var(--s6); text-align:center}
+.close h2{font-size:clamp(2rem,4.6vw,3.4rem)}
+.close p{margin-block:var(--s3) var(--s4); color:rgba(239,230,210,.88); max-inline-size:46ch; margin-inline:auto}
+footer{border-block-start:1px solid var(--rule); background:var(--carmine-dk); padding-block:var(--s4)}
+footer .wrap{display:flex; justify-content:space-between; gap:var(--s3); flex-wrap:wrap;
+  font-family:var(--f-title); font-size:.85rem; color:rgba(239,230,210,.72)}
+</style>
+</head>
+<body>
+<!--
+IMPECCABLE DIRECTION CONTRACT
+THESIS: A loyalty card IS stamps, so the page is a philatelic sheet, not a brochure about one. It refuses the loyalty-SaaS default and refuses its own sibling direction's certificate world.
+OWN-WORLD: Drenched revenue-stamp carmine ground; gum-cream perforated stamps as the only container; ultramarine, olive and ochre as denomination inks; line-engraved hatching; a carmine postmark as the cancellation mark. Rakkas display, Reem Kufi titles, Amiri body. No raster anywhere: perforations are masks, engraving and postmarks are SVG.
+STORY: The merchant overprints his own name onto the sheet's stamp, then works the counter himself: six slots, five affixed stamps, and the sixth struck with a postmark when the reward is redeemed.
+FIRST VIEWPORT: Carmine field. Left: headline, overprint field, ink swatches, one ochre action. Right: a se-tenant block of four perforated stamps in four denomination inks, the merchant's overprint struck across them.
+FORM: Grounded candidate 5 of 7, revenue stamps and permit tasreeh. Seed key 3a6c37fe.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+-->
+
+<header class="mast">
+  <div class="wrap">
+    <span class="mark">بطاقتي</span>
+    <nav aria-label="أقسام الصفحة">
+      <a href="#counter">عند الكاشير</a>
+      <a href="#denoms">طرق الاحتساب</a>
+      <a href="#wallet">في المحفظة</a>
+      <a href="#tiers">الباقات</a>
+    </nav>
+    <a class="btn btn--line" href="#overprint">اطبع اسمك</a>
+  </div>
+</header>
+
+<main>
+
+<section class="hero" id="overprint">
+  <div class="wrap">
+    <div>
+      <h1>كل زيارة طابع<em>وكل مكافأة ختم</em></h1>
+      <p class="lede">بطاقة ولاء تحمل اسم محلّك، تعيش داخل محفظة جوال عميلك. تُلصق الطوابع عند الكاشير، ويُضرب الختم حين تُستبدل المكافأة.</p>
+
+      <div class="overprint-ctl">
+        <label for="shopname">اطبع اسم محلّك على الطابع</label>
+        <input id="shopname" type="text" value="مقهى الرصيف" maxlength="24" autocomplete="off" spellcheck="false">
+        <div class="inks" role="group" aria-label="لون الطباعة">
+          <button class="ink-btn" style="background:#24407A" data-c="#24407A" aria-pressed="true" aria-label="أزرق نيلي"></button>
+          <button class="ink-btn" style="background:#7E1E2C" data-c="#7E1E2C" aria-pressed="false" aria-label="قرمزي"></button>
+          <button class="ink-btn" style="background:#5C6B33" data-c="#5C6B33" aria-pressed="false" aria-label="زيتوني"></button>
+          <button class="ink-btn" style="background:#C9922E" data-c="#C9922E" aria-pressed="false" aria-label="عنبري"></button>
+          <button class="ink-btn" style="background:#4A3A6B" data-c="#4A3A6B" aria-pressed="false" aria-label="بنفسجي"></button>
+          <button class="ink-btn" style="background:#1A1712" data-c="#1A1712" aria-pressed="false" aria-label="أسود"></button>
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <a class="btn" href="#counter">جرّبها عند الكاشير</a>
+        <a class="btn btn--line" href="#wallet">كيف تصل للعميل؟</a>
+      </div>
+      <p class="hero-note">الأسماء والطوابع المعروضة توضيحية، وليست بيانات محل حقيقي.</p>
+    </div>
+
+    <div class="block4 se-tenant" id="block4"></div>
+  </div>
+</section>
+
+<!-- ═══════ THE CANCELLATION ═══════ -->
+<section class="cancel" id="counter">
+  <div class="wrap">
+    <h2>اشترِ 5، والسادس عليك</h2>
+    <p class="sub">هذه هي البطاقة الورقية التي في جيب عميلك الآن، بعد أن انتقلت إلى جواله. المس «امسح» لتلصق طابعاً — وعند الطابع السادس يُضرب الختم وتُستبدل المكافأة، ثم يعود العدّاد إلى الصفر.</p>
+
+    <div class="paper-card">
+      <div class="paper-card-head">
+        <span class="pc-shop" id="pcShop">مقهى الرصيف</span>
+        <span class="pc-kind">بطاقة أختام</span>
+      </div>
+      <div class="strip" id="strip" role="group" aria-label="بطاقة الأختام"></div>
+      <div class="paper-card-foot">
+        <span id="readout">الأختام: <b>0</b> من 5</span>
+        <span class="pc-serial">SA-0001-A</span>
+      </div>
+    </div>
+
+    <div class="cancel-actions">
+      <button class="btn" id="scan">امسح رمز العميل</button>
+      <button class="btn btn--line" id="reset" style="color:var(--ink); border-color:rgba(26,23,18,.4)">إعادة الضبط</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ THE SHEET ═══════ -->
+<section class="sheet" id="denoms">
+  <div class="wrap">
+    <h2>أربع فئات في اللوحة الواحدة</h2>
+    <p class="sub">كل فئة هي طريقة احتساب. تختار واحدة عند إنشاء البطاقة، وتبقى قابلة للتعديل بعد النشر دون حذف البطاقة أو فقدان عملائها.</p>
+    <div class="denoms" id="denom-sheet"></div>
+  </div>
+</section>
+
+<!-- ═══════ WALLET ═══════ -->
+<section class="wallet" id="wallet">
+  <div class="wrap">
+    <div>
+      <h2>الطابع ينتقل إلى المحفظة</h2>
+      <p>تُضاف البطاقة إلى Apple Wallet أو Google Wallet من مسح رمز واحد. عميلك لا يُنزّل تطبيقاً، ولا ينشئ حساباً، ولا يتذكّر كلمة مرور.</p>
+      <ul>
+        <li>عدد الأختام والرصيد يُحدَّثان على البطاقة داخل جواله فور المسح.</li>
+        <li>الإشعار يصل على البطاقة نفسها — لعرض جديد أو لعميل غاب طويلاً.</li>
+        <li>كل عملية إضافة أو استبدال مسجّلة في السجل، وقابلة للإلغاء.</li>
+        <li>لوحة تحكم على المتصفح تدير البرنامج من المكتب، لا من الجوال وحده.</li>
+      </ul>
+    </div>
+    <div id="walletfig"></div>
+  </div>
+</section>
+
+<!-- ═══════ TIERS ═══════ -->
+<section class="tiers" id="tiers">
+  <div class="wrap">
+    <h2>الباقات بمقاس اللوحة</h2>
+    <p class="sub">نفس الطابع ونفس المحرّك. ما يتغيّر هو حجم اللوحة: كم بطاقة، وكم موظفاً، وكم فرعاً.</p>
+    <div class="sizes">
+      <div class="size s1">
+        <div class="plate"><i></i></div>
+        <p class="plate-limit">بطاقة واحدة · 50 عميلاً · موظف واحد</p>
+        <h3>طابع مفرد — مجاني</h3>
+        <ul>
+          <li>بطاقة واحدة · <b>50 عميلاً</b></li>
+          <li>موظف واحد · بلا فروع</li>
+          <li>لوحة تحكم على المتصفح</li>
+          <li>بلا تحليلات متقدمة أو إشعارات</li>
+        </ul>
+      </div>
+      <div class="size s2">
+        <div class="plate"><i></i><i></i><i></i><i></i></div>
+        <p class="plate-limit">بلا حد للبطاقات · 4 موظفين · فرعان</p>
+        <h3>مربّع من أربعة — احترافي</h3>
+        <ul>
+          <li>بطاقات <b>غير محدودة</b> · عملاء غير محدودين</li>
+          <li>حتى <b>4 موظفين</b> · فرعان</li>
+          <li>تحليلات ومقارنة الفروع · تصدير PDF و CSV</li>
+          <li>إشعارات المحفظة · واجهة برمجية ومهام ويب</li>
+        </ul>
+      </div>
+      <div class="size s3">
+        <div class="plate"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <p class="plate-limit">بلا حدود في كل شيء</p>
+        <h3>لوحة كاملة — أعمال</h3>
+        <ul>
+          <li>كل ما سبق، بلا حدود</li>
+          <li>موظفون وفروع <b>غير محدودة</b></li>
+          <li>إدارة مركزية لكل الفروع</li>
+          <li>تكاملات مخصّصة ودعم أسرع</li>
+        </ul>
+      </div>
+    </div>
+    <p class="placeholder">الأسعار لم تُحدَّد بعد. جدول الحدود أعلاه صحيح، أما التسعيرة فستُضاف بعد اعتمادها.</p>
+  </div>
+</section>
+
+<section class="close">
+  <div class="wrap">
+    <h2>اطبع اسمك على أول طابع</h2>
+    <p>اكتب اسم محلّك، اختر لون الطباعة، وشاهد الطابع الذي سيحمله عملاؤك.</p>
+    <button class="btn" id="closeBtn" type="button">اطبع اسمك</button>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>بطاقتي — بطاقات ولاء داخل محفظة الجوال</span>
+    <span>صفحة عرض · المحتوى التوضيحي ليس بيانات حقيقية</span>
+  </div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const NS = "http://www.w3.org/2000/svg";
+  const el = (t, a = {}) => { const e = document.createElementNS(NS, t);
+    for(const k in a) e.setAttribute(k, a[k]); return e; };
+
+  /* ---------- line engraving: the interior of every stamp ----------
+     Fine cross-hatch plus a lathe-turned vignette. Density carries value. */
+  function engraving(tint, seed, density = 26){
+    const s = el("svg", {viewBox:"0 0 100 122", preserveAspectRatio:"none", "aria-hidden":"true"});
+    s.setAttribute("class","engrave");
+    const g = el("g", {stroke:tint, fill:"none"});
+    // Background hatch stays faint: it is the paper's tone, not a graph grid.
+    for(let i=0;i<density;i++){
+      const y = 14 + i*(94/density);
+      g.appendChild(el("path",{d:`M10 ${y.toFixed(1)} H90`, "stroke-width":"0.3",
+        "stroke-opacity":(0.05 + 0.09*Math.abs(Math.sin(i*0.7+seed))).toFixed(3)}));
+    }
+    for(let i=0;i<density;i++){
+      const x = 10 + i*(80/density);
+      g.appendChild(el("path",{d:`M${x.toFixed(1)} 14 V108`, "stroke-width":"0.26",
+        "stroke-opacity":(0.04 + 0.07*Math.abs(Math.cos(i*0.6+seed))).toFixed(3)}));
+    }
+    // The lathe vignette: fewer, crisper, well-separated rings so it reads as
+    // engine-turning rather than as a topographic blur.
+    const lobes = 8 + (seed % 4);
+    for(let i=0;i<11;i++){
+      const rr = 9 + i*2.6;
+      const pts = [];
+      for(let t=0;t<=Math.PI*2+0.01;t+=Math.PI/70){
+        const r = rr * (0.94 + 0.06*Math.cos(lobes*t + i*0.22));
+        pts.push(`${(50+r*Math.cos(t)).toFixed(1)} ${(61+r*Math.sin(t)*1.16).toFixed(1)}`);
+      }
+      g.appendChild(el("path",{d:"M"+pts.join("L")+"Z","stroke-width":"0.4",
+        "stroke-opacity":(0.42 - i*0.026).toFixed(3)}));
+    }
+    s.appendChild(g);
+    return s;
+  }
+
+  /* The reward mark, drawn in the sheet's own grammar. A Unicode star would be a
+     glyph standing in for an icon, which the craft floor refuses. */
+  function rewardMark(color = "#7E1E2C"){
+    const s = el("svg",{viewBox:"0 0 40 40","aria-hidden":"true"});
+    const g = el("g",{stroke:color,fill:"none","stroke-width":"1.6","stroke-linejoin":"round"});
+    g.appendChild(el("circle",{cx:20,cy:20,r:15,"stroke-dasharray":"3 2.6"}));
+    g.appendChild(el("path",{d:"M20 8 L23.2 16.4 L32 17 L25.2 22.6 L27.4 31 L20 26.2 L12.6 31 L14.8 22.6 L8 17 L16.8 16.4 Z",
+      "stroke-width":"1.5"}));
+    s.appendChild(g);
+    return s;
+  }
+
+  /* ---------- the postmark: what redemption looks like ---------- */
+  function postmark(color = "#7E1E2C"){
+    const s = el("svg",{viewBox:"0 0 120 120","aria-hidden":"true"});
+    s.setAttribute("class","pm");
+    const g = el("g",{stroke:color,fill:"none","stroke-width":"2.4","stroke-linecap":"round"});
+    g.appendChild(el("circle",{cx:60,cy:60,r:31,"stroke-width":"3"}));
+    g.appendChild(el("circle",{cx:60,cy:60,r:25,"stroke-width":"1.4"}));
+    for(let i=0;i<5;i++){
+      const y = 44 + i*8;
+      let d = `M4 ${y}`;
+      for(let x=4;x<=116;x+=8) d += ` q4 -4 8 0 q4 4 8 0`;
+      g.appendChild(el("path",{d,"stroke-width":"2","stroke-opacity":".85"}));
+    }
+    g.appendChild(el("path",{d:"M42 60 H78","stroke-width":"2.2"}));
+    s.appendChild(g);
+    return s;
+  }
+
+  /* ---------- state ---------- */
+  let shopName = "مقهى الرصيف";
+  let inkColor = "#24407A";
+
+  /* ---------- hero: a se-tenant block of four ---------- */
+  const DENOMS = [
+    {cls:"d1", tint:"#24407A", head:"فئة أ", val:"نقطة / ريال", cur:"لكل عملية شراء"},
+    {cls:"d2", tint:"#5C6B33", head:"فئة ب", val:"نقاط / زيارة", cur:"لكل زيارة"},
+    {cls:"d3", tint:"#A8354A", head:"فئة ج", val:"5 ثم مكافأة", cur:"أختام ثم هدية"},
+    {cls:"d4", tint:"#C9922E", head:"فئة د", val:"يدوي", cur:"يُدخله الموظف"}
+  ];
+
+  function buildStamp(d, i, withOverprint){
+    const st = document.createElement("div");
+    st.className = "stamp " + d.cls;
+    st.style.setProperty("--tint", d.tint);
+    st.appendChild(engraving(d.tint, i+1));
+    const inner = document.createElement("span"); inner.className = "stamp-inner";
+    inner.style.color = d.tint;
+    const head = document.createElement("div"); head.className = "st-head"; head.textContent = d.head;
+    // The base issue is generic; the merchant's name arrives as an overprint,
+    // exactly as a revenue stamp is overprinted for its issuing authority.
+    const name = document.createElement("div"); name.className = "st-name"; name.textContent = "بطاقة ولاء";
+    const val  = document.createElement("div"); val.className  = "st-val";  val.textContent  = d.val;
+    const cur  = document.createElement("div"); cur.className  = "st-cur";  cur.textContent  = d.cur;
+    const foot = document.createElement("div"); foot.className = "st-foot"; foot.append(val, cur);
+    st.append(inner, head, name, foot);
+    if(withOverprint){
+      const op = document.createElement("div"); op.className = "st-overprint"; op.textContent = shopName;
+      st.appendChild(op);
+    }
+    return st;
+  }
+
+  const block = document.getElementById("block4");
+  function renderBlock(animate){
+    block.replaceChildren(...DENOMS.map((d,i) => buildStamp(d,i,true)));
+    document.documentElement.style.setProperty("--shop", inkColor);
+    if(animate){
+      block.classList.remove("printing"); void block.offsetWidth; block.classList.add("printing");
+    }
+  }
+
+  /* ---------- the sheet section ---------- */
+  const DETAIL = [
+    {h:"نقطة لكل ريال", p:"تُحتسب النقاط من قيمة الفاتورة مضروبة في المعدّل، ثم تُقرّب للأسفل.", dt:["المعدّل","حد أدنى"], dd:["نقاط لكل ريال","للشراء المحتسب"]},
+    {h:"نقاط لكل زيارة", p:"عدد ثابت من النقاط لكل زيارة، مهما كانت قيمة الفاتورة.", dt:["الثابت","الصلاحية"], dd:["نقاط لكل زيارة","بلا انتهاء أو 90 يوماً أو سنة"]},
+    {h:"اشترِ 5 واحصل على السادس", p:"5 أختام ثم مكافأة مجانية، ويعود العدّاد إلى الصفر تلقائياً.", dt:["الأختام","صورة"], dd:["لكل بطاقة","لكل موضع ختم"]},
+    {h:"يدوي", p:"الموظف يُدخل المبلغ بنفسه، للحالات التي لا تنضبط بقاعدة واحدة.", dt:["الصلاحية","السجل"], dd:["تُمنح للموظف","كل عملية مسجّلة"]}
+  ];
+  const denomHost = document.getElementById("denom-sheet");
+  DENOMS.forEach((d,i) => {
+    const wrap = document.createElement("div"); wrap.className = "denom";
+    wrap.appendChild(buildStamp(d, i+9, false));
+    const h = document.createElement("h3"); h.textContent = DETAIL[i].h;
+    const p = document.createElement("p"); p.textContent = DETAIL[i].p;
+    const dl = document.createElement("dl");
+    DETAIL[i].dt.forEach((t,k) => {
+      const dt = document.createElement("dt"); dt.textContent = t;
+      const dd = document.createElement("dd"); dd.textContent = DETAIL[i].dd[k];
+      dl.append(dt, dd);
+    });
+    wrap.append(h, p, dl);
+    denomHost.appendChild(wrap);
+  });
+
+  /* ---------- the counter: affix and cancel ---------- */
+  const strip = document.getElementById("strip");
+  const readout = document.getElementById("readout");
+  const SLOTS = 6;
+  let stamps = 0;
+
+  function renderStrip(){
+    strip.replaceChildren();
+    for(let i=0;i<SLOTS;i++){
+      const slot = document.createElement("div");
+      slot.className = "slot" + (i === SLOTS-1 ? " reward" : "");
+      slot.setAttribute("aria-label", i === SLOTS-1 ? "المكافأة" : `الختم ${i+1}`);
+      if(i < stamps){
+        slot.classList.add("filled");
+        // Pinned to the 5+1 mode this section demonstrates: one card runs ONE
+        // earning mode, so cycling the four فئات contradicted the page's own fact.
+        const mini = buildStamp(DENOMS[2], i+21, false);
+        mini.classList.add("mini");
+        mini.querySelector(".st-name").textContent = shopName;
+        mini.querySelector(".st-val").textContent = "";
+        mini.querySelector(".st-cur").textContent = "";
+        slot.appendChild(mini);
+      } else {
+        const idx = document.createElement("span"); idx.className = "idx";
+        if(i === SLOTS-1){ idx.appendChild(rewardMark()); idx.classList.add("is-reward"); }
+      else { idx.textContent = String(i+1); }
+        slot.appendChild(idx);
+      }
+      if(i === SLOTS-1 && stamps >= SLOTS){
+        slot.classList.add("cancelled");
+        slot.appendChild(postmark());
+      }
+      strip.appendChild(slot);
+    }
+    const shown = Math.min(stamps, 5);
+    readout.innerHTML = stamps >= SLOTS
+      ? 'تم استبدال المكافأة — <b>الختم مضروب</b>'
+      : `الأختام: <b>${shown}</b> من 5`;
+  }
+
+  document.getElementById("scan").addEventListener("click", () => {
+    stamps = stamps >= SLOTS ? 1 : stamps + 1;
+    renderStrip();
+  });
+  document.getElementById("reset").addEventListener("click", () => { stamps = 0; renderStrip(); });
+
+  /* ---------- wallet figure: the stamp inside a phone, drawn ---------- */
+  function walletFig(){
+    const host = document.getElementById("walletfig");
+    host.replaceChildren();
+    const s = el("svg",{viewBox:"0 0 300 420", role:"img"});
+    s.setAttribute("aria-label","جوال يعرض بطاقة الولاء داخل المحفظة، فوقها حافتا بطاقتين أخريين.");
+    s.setAttribute("width","100%");
+    s.style.maxWidth = "320px"; s.style.marginInline = "auto";
+    s.appendChild(el("rect",{x:14,y:8,width:272,height:404,rx:34,fill:"#1A1712"}));
+    s.appendChild(el("rect",{x:24,y:20,width:252,height:380,rx:26,fill:"#5A1220"}));
+    s.appendChild(el("rect",{x:118,y:26,width:64,height:7,rx:3.5,fill:"#1A1712"}));
+    // two passes peeking from the wallet stack, in other merchants' inks
+    s.appendChild(el("rect",{x:52,y:66,width:196,height:40,rx:6,fill:"#EFE6D2"}));
+    s.appendChild(el("rect",{x:52,y:66,width:196,height:9,fill:"#C9922E"}));
+    s.appendChild(el("rect",{x:44,y:84,width:212,height:44,rx:6,fill:"#EFE6D2"}));
+    s.appendChild(el("rect",{x:44,y:84,width:212,height:10,fill:"#5C6B33"}));
+
+    // The active pass is built from the sheet's own devices: gum stock, the
+    // engraved lathe, the overprint, and the stamp row the product actually runs.
+    const card = el("g");
+    card.appendChild(el("rect",{x:36,y:112,width:228,height:216,rx:8,fill:"#EFE6D2"}));
+    const eng = engraving("#24407A", 4, 22);
+    eng.setAttribute("x","36"); eng.setAttribute("y","112");
+    eng.setAttribute("width","228"); eng.setAttribute("height","216");
+    eng.removeAttribute("class");
+    card.appendChild(eng);
+    card.appendChild(el("rect",{x:46,y:122,width:208,height:196,fill:"none",stroke:"#24407A","stroke-width":"1.2"}));
+    const op = el("text",{x:150,y:158,"text-anchor":"middle","font-family":"Reem Kufi, sans-serif",
+      "font-size":"17","font-weight":"700",fill:"#24407A","fill-opacity":".9"});
+    op.textContent = shopName;
+    card.appendChild(op);
+    for(let i=0;i<6;i++){
+      const cx = 62 + i*35, filled = i < 4;
+      card.appendChild(el("circle",{cx,cy:206,r:12,fill:filled?"#7E1E2C":"none","fill-opacity":filled?".85":"0",
+        stroke:"#1A1712","stroke-width":"1.2","stroke-dasharray":filled?"0":"3 2"}));
+    }
+    const lab = el("text",{x:150,y:246,"text-anchor":"middle","font-family":"Reem Kufi, sans-serif",
+      "font-size":"11",fill:"#54483C"});
+    lab.textContent = "4 من 5 أختام";
+    card.appendChild(lab);
+    for(let y=0;y<7;y++) for(let x=0;x<7;x++){
+      if((x*7+y*3+ (x^y)) % 3) continue;
+      card.appendChild(el("rect",{x:112+x*8,y:266+y*8,width:7,height:7,fill:"#1A1712"}));
+    }
+    s.appendChild(card);
+    s.appendChild(el("rect",{x:70,y:352,width:160,height:10,rx:5,fill:"#EFE6D2","fill-opacity":".22"}));
+    host.appendChild(s);
+  }
+
+  /* ---------- controls ---------- */
+  const input = document.getElementById("shopname");
+  const pcShop = document.getElementById("pcShop");
+  let typing;
+  input.addEventListener("input", () => {
+    clearTimeout(typing);
+    typing = setTimeout(() => {
+      shopName = (input.value || "").trim() || "محلّي";
+      if(pcShop) pcShop.textContent = shopName;
+      renderBlock(false);
+      renderStrip();
+      walletFig();
+    }, 100);
+  });
+
+  // The conversion on this surface IS the overprint control, so the closing
+  // action drives it rather than anchoring to a section that explains it.
+  document.getElementById("closeBtn").addEventListener("click", () => {
+    document.getElementById("overprint").scrollIntoView({block:"start", behavior:"smooth"});
+    input.focus(); input.select();
+    renderBlock(true);
+  });
+  document.querySelectorAll(".ink-btn").forEach(btn => btn.addEventListener("click", () => {
+    document.querySelectorAll(".ink-btn").forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
+    inkColor = btn.dataset.c;
+    renderBlock(true);
+  }));
+
+  renderBlock(false);
+  renderStrip();
+  walletFig();
+})();
+</script>
+</body>
+</html>

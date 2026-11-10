@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>بطاقتي — بطاقة محلّك في جوال عميلك</title>
+<meta name="description" content="بطاقة ولاء بهوية محلّك، تعيش داخل محفظة جوال عميلك. بدون تطبيق يحمّله العميل.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230A3A2A'/%3E%3Crect x='5' y='9' width='22' height='14' rx='2' fill='%23F2E9D8'/%3E%3Crect x='5' y='15' width='22' height='3' fill='%23C8452D'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Noto+Kufi+Arabic:wght@400;500;700;900&family=Noto+Naskh+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   بطاقتي — «الوثيقة المُفصَّلة» / The Issued Pattern
+   ============================================================ */
+:root{
+  --green-900:#06271D; --green-800:#0A3A2A; --green-700:#10432F;
+  --cream:#F2E9D8;    --manila:#E8DCC4;
+  --brass:#C39A4E;    --brass-dk:#8A6A2E;  --brass-lt:#E3C382;
+  --vermillion:#C8452D; --ink:#14100C;     --ink-soft:#4A423A;
+  --rule:rgba(195,154,78,.34);
+  --shop:#C8452D;
+
+  --f-display:"Aref Ruqaa",serif;
+  --f-title:"Noto Kufi Arabic",sans-serif;
+  --f-body:"Noto Naskh Arabic",serif;
+
+  --s1:.5rem; --s2:.875rem; --s3:1.25rem; --s4:2rem; --s5:3.25rem; --s6:5rem; --s7:8rem;
+  --maxw:1360px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0; background:var(--green-800); color:var(--cream);
+  font-family:var(--f-body); font-size:1.0625rem; line-height:1.75;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+img{max-width:100%; display:block}
+h1,h2,h3{font-family:var(--f-title); font-weight:900; line-height:1.28; margin:0; text-wrap:balance}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--brass-lt); outline-offset:3px; border-radius:2px}
+
+.paper{background-image:url("assets/paper-cream.png"); background-size:520px; background-color:var(--cream)}
+.tissue{background-image:url("assets/tissue-manila.png"); background-size:620px; background-color:var(--manila)}
+.wrap{max-width:var(--maxw); margin-inline:auto; padding-inline:clamp(1rem,4vw,3rem)}
+
+/* ---------- masthead ---------- */
+.mast{position:relative; z-index:20; border-block-end:1px solid var(--rule); background:var(--green-900)}
+.mast .wrap{display:flex; align-items:center; gap:var(--s4); min-height:74px}
+.mark{font-family:var(--f-display); font-weight:700; font-size:1.75rem; color:var(--brass-lt); margin-inline-end:auto; line-height:1.4}
+.mast nav{display:flex; gap:var(--s3); font-family:var(--f-title); font-size:.875rem; color:rgba(242,233,216,.78)}
+.mast nav a{text-decoration:none; padding-block:.35rem; border-block-end:1px solid transparent; transition:color .2s,border-color .2s}
+.mast nav a:hover{color:var(--brass-lt); border-block-end-color:var(--brass)}
+@media (max-width:900px){.mast nav{display:none}}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex; align-items:center; gap:.6rem; font-family:var(--f-title); font-weight:700;
+  font-size:1.0625rem; padding:.95rem 1.9rem; border:0; cursor:pointer; text-decoration:none;
+  background:var(--vermillion); color:#FFF3EC; border-radius:2px;
+  box-shadow:0 2px 0 rgba(0,0,0,.28), 0 14px 26px -14px rgba(0,0,0,.7);
+  transition:transform .18s cubic-bezier(.2,.8,.2,1), box-shadow .18s;
+}
+.btn:hover{transform:translateY(-2px); box-shadow:0 4px 0 rgba(0,0,0,.28), 0 20px 32px -14px rgba(0,0,0,.75)}
+.btn:active{transform:translateY(0)}
+.btn--ghost{background:transparent; color:var(--cream); border:1px solid var(--rule); box-shadow:none}
+.btn--ghost:hover{border-color:var(--brass); color:var(--brass-lt)}
+
+/* ============================================================ HERO */
+/* Solid ground, not a radial wash: the hero is a lighter stock than the sections
+   below it, which is a material difference rather than a decorative glow. */
+.hero{position:relative; padding-block:clamp(var(--s5),6vw,var(--s6)) var(--s6); overflow:hidden;
+  background:var(--green-700)}
+/* Areas, not source order: below 1080 the card must sit BETWEEN the headline and
+   the name field, or the visitor types into a control whose effect is offscreen. */
+.hero .wrap{position:relative; display:grid; grid-template-columns:minmax(320px,.84fr) 1.32fr;
+  grid-template-areas:"copy fig" "ctrl fig"; gap:clamp(1.5rem,3vw,2.5rem) clamp(2rem,4vw,4.5rem); align-items:center}
+.hero-copy{grid-area:copy}
+.hero-fig{grid-area:fig}
+.hero-ctrl{grid-area:ctrl}
+@media (max-width:1080px){
+  .hero .wrap{grid-template-columns:1fr; grid-template-areas:"copy" "fig" "ctrl"; gap:var(--s4)}
+}
+
+.hero h1{font-size:clamp(2.35rem,5.2vw,4.25rem); color:var(--cream)}
+.hero h1 .accent{color:var(--brass-lt); display:block}
+.lede{margin-block-start:var(--s3); max-width:36ch; color:rgba(242,233,216,.86); font-size:1.125rem}
+.hero-actions{margin-block-start:var(--s4); display:flex; align-items:center; gap:var(--s3); flex-wrap:wrap}
+
+.studio{margin-block-start:var(--s4); border-block-start:1px solid var(--rule); padding-block-start:var(--s3)}
+.studio label{display:block; font-family:var(--f-title); font-size:.8rem; letter-spacing:.04em; color:rgba(242,233,216,.74); margin-block-end:.55rem}
+.studio input{
+  width:100%; max-width:24rem; background:rgba(6,39,29,.75); border:1px solid var(--rule);
+  color:var(--cream); font-family:var(--f-display); font-size:1.35rem; padding:.7rem .95rem; border-radius:2px; line-height:1.6;
+}
+.studio input::placeholder{color:rgba(242,233,216,.45); font-family:var(--f-body); font-size:1rem}
+.swatches{display:flex; gap:.6rem; margin-block-start:var(--s3); flex-wrap:wrap}
+.swatch{inline-size:38px; block-size:38px; border-radius:2px; border:1px solid rgba(0,0,0,.35);
+  cursor:pointer; padding:0; position:relative; transition:transform .16s}
+.swatch:hover{transform:translateY(-3px)}
+.swatch[aria-pressed="true"]::after{content:""; position:absolute; inset:-6px; border:1.5px solid var(--brass-lt); border-radius:3px}
+
+.wall{position:relative; display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(.55rem,1vw,1rem)}
+@media (max-width:640px){
+  .wall{grid-template-columns:repeat(3,1fr)}
+  .tile .qr{display:none}
+  .tile .nm{left:8%; right:8%; bottom:8%; font-size:.78rem}
+}
+.wall .tile{position:relative; aspect-ratio:1.586; border-radius:5px; overflow:hidden;
+  background:var(--cream); box-shadow:0 10px 22px -14px rgba(0,0,0,.85); transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.wall .tile:hover{transform:translateY(-4px)}
+.tile .band{position:absolute; left:0; right:0; block-size:22%; top:40%}
+.tile .rose{position:absolute; top:6%; left:4%; inline-size:46%; opacity:.9}
+/* Kufi, not Ruqaa: Aref Ruqaa is calligraphic and loses its joins at tile size,
+   where Noto Kufi Arabic still reads cleanly at 13px. */
+.tile .nm{position:absolute; bottom:6%; right:8%; font-family:var(--f-title); font-weight:500;
+  font-size:clamp(.82rem,1.05vw,.95rem); color:var(--ink); line-height:1.5}
+.tile .qr{position:absolute; bottom:7%; left:8%; inline-size:16%; opacity:.85}
+
+/* Physical top/left on purpose: inset-inline-start flips to the right edge in RTL
+   while translate stays physical, which threw the card off the left of the page. */
+.issued{position:absolute; top:50%; left:50%; translate:-50% -50%;
+  inline-size:min(62%,430px); aspect-ratio:1.586; z-index:5}
+@media (max-width:640px){.issued{inline-size:min(86%,340px)}}
+.card-face{position:relative; inline-size:100%; block-size:100%; border-radius:9px; overflow:hidden;
+  background-image:url("assets/paper-cream.png"); background-size:340px; background-color:var(--cream);
+  box-shadow:0 3px 0 rgba(0,0,0,.16), 0 34px 60px -22px rgba(0,0,0,.85), 0 0 0 1px rgba(20,16,12,.14)}
+.card-face .rule-o{position:absolute; inset:8px; border:1.5px solid var(--brass); border-radius:5px; pointer-events:none}
+.card-face .rule-i{position:absolute; inset:13px; border:.75px solid rgba(195,154,78,.6); border-radius:3px; pointer-events:none}
+/* Card internals use PHYSICAL offsets: this is one fixed-geometry object, and
+   logical properties flipped it into overlapping pieces under dir=rtl. */
+.card-band{position:absolute; left:5%; right:5%; top:37%; block-size:15%; background:var(--shop); z-index:2;
+  display:flex; align-items:center; justify-content:space-between; padding-inline:3.5%; gap:.5rem}
+.cb-label{font-family:var(--f-title); font-size:clamp(.58rem,.92vw,.7rem); letter-spacing:.1em; color:rgba(255,255,255,.86)}
+.cb-value{font-family:var(--f-title); font-weight:700; font-size:clamp(.8rem,1.35vw,1.02rem); color:#fff}
+/* flex-start is the RIGHT edge under dir=rtl — the stamps must begin under the
+   shop's name and run inward, not collide with the QR in the opposite corner. */
+.card-stamps{position:absolute; z-index:2; left:5%; right:5%; top:56%; display:flex; gap:3.2%; justify-content:flex-start}
+.card-stamps i{inline-size:9.5%; aspect-ratio:1; border-radius:50%; border:1.2px solid var(--ink);
+  display:block; background:transparent}
+.card-stamps i.on{background:var(--shop); border-color:var(--shop)}
+.card-next{position:absolute; z-index:2; right:5%; top:72%; font-family:var(--f-title);
+  font-size:clamp(.58rem,.92vw,.72rem); color:var(--ink-soft)}
+.card-next b{color:var(--ink); font-weight:700}
+.card-band::after{content:""; position:absolute; inset:0; opacity:.28;
+  background:repeating-linear-gradient(90deg, rgba(255,255,255,.55) 0 1px, transparent 1px 5px)}
+.card-rose{position:absolute; top:16%; left:4%; inline-size:38%; z-index:0; opacity:.8}
+.card-slot{position:absolute; z-index:2; top:9%; left:7%; inline-size:15%; aspect-ratio:1;
+  border:1px solid var(--brass); border-radius:3px}
+.card-name{position:absolute; z-index:2; top:10%; right:6%; font-family:var(--f-display);
+  font-size:clamp(.98rem,1.75vw,1.32rem); color:var(--ink); line-height:1.5; max-inline-size:58%; text-align:right}
+.card-serial{position:absolute; z-index:2; bottom:8%; left:24%; font-family:var(--f-title);
+  font-size:.6rem; letter-spacing:.14em; color:var(--ink-soft)}
+.card-qr{position:absolute; z-index:2; bottom:7%; left:6%; inline-size:14%}
+.card-seal{position:absolute; bottom:-14px; right:-12px; inline-size:20%; z-index:3;
+  filter:drop-shadow(0 6px 10px rgba(0,0,0,.45))}
+.card-stamp{position:absolute; top:-8px; left:24%; inline-size:15%; opacity:.85; z-index:4; rotate:-9deg}
+
+@keyframes reissue{0%{opacity:0; scale:.965; filter:blur(3px)} 60%{opacity:1; filter:blur(0)} 100%{opacity:1; scale:1}}
+@keyframes strike{0%{opacity:0; scale:1.5; rotate:-26deg} 55%{opacity:1; scale:.94; rotate:-6deg} 100%{opacity:.92; scale:1; rotate:-9deg}}
+.reissuing .card-rose,.reissuing .card-band,.reissuing .card-name{animation:reissue .5s cubic-bezier(.2,.85,.25,1) both}
+.reissuing .card-stamp{animation:strike .48s cubic-bezier(.2,.9,.25,1) both}
+@media (prefers-reduced-motion:reduce){.reissuing *{animation:none !important}}
+
+.hero-note{margin-block-start:var(--s2); font-size:.8rem; color:rgba(242,233,216,.7); font-family:var(--f-title)}
+
+/* ============================================================ CUT STRIP */
+.cutstrip{position:relative; color:var(--ink); padding-block:var(--s5)}
+.cutstrip::before,.cutstrip::after{content:""; position:absolute; inset-inline:0; block-size:2px;
+  background-image:repeating-linear-gradient(90deg,var(--ink-soft) 0 9px,transparent 9px 18px); opacity:.5}
+.cutstrip::before{inset-block-start:16px}
+.cutstrip::after{inset-block-end:16px}
+.strip-head{display:grid; gap:var(--s2); margin-block-end:var(--s4); max-width:62ch}
+.strip-head h2{font-size:clamp(1.6rem,3vw,2.35rem); color:var(--ink)}
+.strip-head p{color:var(--ink-soft)}
+.views{display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(1rem,2vw,2rem)}
+@media (max-width:980px){.views{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.views{grid-template-columns:1fr}}
+.view{position:relative; padding-block-start:var(--s4)}
+.view .ltr{position:absolute; inset-block-start:0; inset-inline-start:0; font-family:var(--f-title); font-weight:900;
+  font-size:2.4rem; line-height:1; color:var(--vermillion); opacity:.32}
+.view figure{margin:0 0 var(--s2); border:1px dashed rgba(20,16,12,.42); padding:var(--s2); background:rgba(255,255,255,.4)}
+.view h3{font-size:1.125rem; color:var(--ink); margin-block-end:.4rem}
+.view p{font-size:.95rem; color:var(--ink-soft)}
+.view dl{margin:var(--s2) 0 0; font-family:var(--f-title); font-size:.82rem;
+  display:grid; grid-template-columns:auto 1fr; gap:.3rem .75rem}
+.view dt{color:rgba(20,16,12,.62)}
+.view dd{margin:0; color:var(--ink)}
+
+/* ============================================================ ANATOMY */
+.anatomy{background:var(--green-900); padding-block:var(--s6)}
+.anatomy h2{font-size:clamp(1.8rem,3.4vw,2.75rem); margin-block-end:var(--s2)}
+.anatomy .sub{color:rgba(242,233,216,.8); max-width:54ch; margin-block-end:var(--s5)}
+.anat-grid{display:grid; grid-template-columns:1.2fr .95fr; gap:clamp(1.5rem,4vw,4rem); align-items:center}
+@media (max-width:980px){.anat-grid{grid-template-columns:1fr}}
+.anat-fig{position:relative}
+.anat-list{list-style:none; margin:0; padding:0; display:grid; gap:var(--s3)}
+.anat-list li{display:grid; grid-template-columns:auto 1fr; gap:var(--s2); align-items:start;
+  padding-block-end:var(--s3); border-block-end:1px solid rgba(195,154,78,.18)}
+.anat-list li:last-child{border-block-end:0}
+.anat-list .num{inline-size:30px; block-size:30px; border:1px solid var(--brass); border-radius:50%;
+  display:grid; place-items:center; font-family:var(--f-title); font-size:.8rem; color:var(--brass-lt)}
+.anat-list h3{font-family:var(--f-title); font-size:1.0625rem; font-weight:700; color:var(--cream); margin-block-end:.2rem}
+.anat-list p{font-size:.95rem; color:rgba(242,233,216,.74)}
+
+/* ============================================================ WALLET */
+.wallet{position:relative; padding-block:var(--s6); overflow:hidden; background:var(--green-800)}
+.wallet .wrap{display:grid; grid-template-columns:1fr .8fr; gap:clamp(1.5rem,4vw,4rem); align-items:center}
+@media (max-width:980px){.wallet .wrap{grid-template-columns:1fr}}
+.wallet h2{font-size:clamp(1.8rem,3.6vw,3rem); margin-block-end:var(--s3)}
+.wallet p{color:rgba(242,233,216,.84); max-width:48ch}
+.wallet-points{list-style:none; margin:var(--s4) 0 0; padding:0; display:grid; gap:var(--s2)}
+.wallet-points li{display:flex; gap:var(--s2); align-items:flex-start; font-size:1rem; color:rgba(242,233,216,.9)}
+.wallet-points svg{flex:none; margin-block-start:.42rem}
+/* Set into material, not floated: the phone sits on a cream stock panel with a
+   hard edge and a contact shadow, so it reads as an object on a surface. */
+.phone-fig{position:relative; justify-self:center; margin:0; padding:var(--s4) var(--s3) 0;
+  background-image:url("assets/paper-cream.png"); background-size:420px; background-color:var(--cream);
+  border:1px solid var(--brass); box-shadow:0 2px 0 rgba(0,0,0,.22)}
+.phone-fig img{inline-size:min(100%,320px); margin-inline:auto;
+  filter:drop-shadow(0 10px 14px rgba(20,16,12,.34))}
+
+/* ============================================================ COUNTER */
+.counter{position:relative; color:var(--ink)}
+.counter .band{position:relative; overflow:hidden}
+.counter img.scene{inline-size:100%; block-size:clamp(320px,42vw,520px); object-fit:cover}
+.counter .overlay{position:absolute; inset-block-end:0; inset-inline:0; padding-block:var(--s5);
+  background:linear-gradient(0deg, rgba(6,39,29,.96) 14%, rgba(6,39,29,.55) 62%, transparent); color:var(--cream)}
+.counter h2{font-size:clamp(1.6rem,3.2vw,2.5rem); margin-block-end:var(--s2)}
+.steps{list-style:none; margin:var(--s3) 0 0; padding:0; display:grid; grid-template-columns:repeat(4,1fr); gap:var(--s3)}
+@media (max-width:820px){.steps{grid-template-columns:repeat(2,1fr)}}
+.steps li{border-block-start:1px solid var(--rule); padding-block-start:var(--s2)}
+.steps b{display:block; font-family:var(--f-title); font-size:.95rem; color:var(--brass-lt); margin-block-end:.25rem}
+.steps span{font-size:.92rem; color:rgba(242,233,216,.82)}
+
+/* ============================================================ TIERS */
+.tiers{padding-block:var(--s6); color:var(--ink)}
+.tiers h2{font-size:clamp(1.8rem,3.4vw,2.6rem); color:var(--ink)}
+.tiers .sub{color:var(--ink-soft); max-width:54ch; margin-block-start:var(--s2)}
+.grade{margin-block-start:var(--s5); display:grid; grid-template-columns:1fr 1.05fr; gap:clamp(1.5rem,4vw,3.5rem); align-items:center}
+@media (max-width:980px){.grade{grid-template-columns:1fr}}
+.grade-list{list-style:none; margin:0; padding:0; display:grid; gap:var(--s3)}
+.grade-list li{padding-inline-start:var(--s3); border-inline-start:2px solid currentColor}
+.grade-list h3{font-family:var(--f-title); font-size:1.05rem; margin-block-end:.25rem}
+.grade-list p{font-size:.98rem; color:var(--ink)}
+.grade-list .g-note{font-family:var(--f-title); font-size:.86rem; color:var(--ink-soft); margin-block-start:.2rem}
+.grade-list .g-price{font-family:var(--f-title); font-size:.82rem; color:var(--vermillion); margin-block-start:.35rem}
+.g-1{color:var(--ink-soft)} .g-2{color:var(--vermillion)} .g-3{color:var(--brass-dk)}
+.grade-list h3{color:var(--ink)}
+.placeholder{margin-block-start:var(--s3); font-family:var(--f-title); font-size:.85rem; color:var(--ink);
+  border:1px dashed rgba(200,69,45,.6); padding:.75rem .95rem; background:rgba(200,69,45,.07)}
+
+/* ============================================================ CLOSE */
+.close{background:var(--green-900); padding-block:var(--s6); text-align:center}
+.close-stack{inline-size:min(100%,460px); margin:0 auto var(--s4); filter:drop-shadow(0 18px 26px rgba(0,0,0,.5))}
+.close h2{font-size:clamp(2rem,4.4vw,3.2rem); margin-block-end:var(--s3)}
+.close p{color:rgba(242,233,216,.84); max-width:46ch; margin-inline:auto; margin-block-end:var(--s4)}
+footer{border-block-start:1px solid var(--rule); padding-block:var(--s4); background:var(--green-900)}
+footer .wrap{display:flex; justify-content:space-between; gap:var(--s3); flex-wrap:wrap;
+  font-family:var(--f-title); font-size:.84rem; color:rgba(242,233,216,.68)}
+</style>
+</head>
+<body>
+<!--
+IMPECCABLE DIRECTION CONTRACT
+THESIS: A loyalty card is a credential, so this page issues one instead of advertising one. Refuses the loyalty-SaaS default: violet gradient, floating phone, three icon cards, price table.
+OWN-WORLD: Deep pine green ground; cream laid-paper credential panels; brass foil rules and seals; guilloche drawn live from the merchant's own colour; manila pattern tissue with dashed cut lines and circled leader markers; vermillion stamp ink. Ruqaa display, Kufi titles, Naskh body.
+STORY: A Saudi shop owner finds his own trade among twelve cards, types his shop name, picks a colour, and watches the credential re-issue in his identity; then learns how it earns, what it carries, and how it reaches a wallet.
+FIRST VIEWPORT: Deep green. Right: a 4x3 wall of credentials, one per trade, with the visitor's own card issued at 2.5x scale over its centre. Left third: headline, one vermillion action, the name field and livery swatches.
+FORM: Merged from three dealt cards, Credential dominant, Pattern Envelope notation, Racing Livery colour behaviour. Grounded candidate 4 of 7. Seed key 27c0686e.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+-->
+
+<header class="mast">
+  <div class="wrap">
+    <span class="mark">بطاقتي</span>
+    <nav aria-label="أقسام الصفحة">
+      <a href="#modes">طرق الاحتساب</a>
+      <a href="#anatomy">ماذا يحمل الكرت</a>
+      <a href="#wallet">في المحفظة</a>
+      <a href="#tiers">الباقات</a>
+    </nav>
+    <a class="btn btn--ghost" href="#issue">جرّب بطاقتك</a>
+  </div>
+</header>
+
+<main>
+
+<section class="hero" id="issue">
+  <div class="wrap">
+    <div class="hero-copy">
+      <h1>بطاقة محلّك<span class="accent">في جوال عميلك</span></h1>
+      <p class="lede">تُصدر بطاقة ولاء تحمل اسم محلّك ولونه، فتستقر داخل محفظة آبل أو جوجل في جوال عميلك. عميلك لا يحمّل أي تطبيق، بل يمسح الرمز مرة واحدة فقط.</p>
+    </div>
+
+    <div class="anat-fig hero-fig">
+      <div class="wall" id="wall" aria-hidden="true"></div>
+      <div class="issued" id="issued">
+        <div class="card-face" id="cardface">
+          <span class="rule-o"></span><span class="rule-i"></span>
+          <div class="card-rose" id="cardrose"></div>
+          <div class="card-name" id="cardname">مغسلة الصفا</div>
+          <div class="card-slot"></div>
+          <div class="card-band"><span class="cb-label">الرصيد</span><span class="cb-value">240 نقطة</span></div>
+          <div class="card-stamps" id="cardstamps"></div>
+          <div class="card-next">حتى المكافأة: <b>عمليتان</b></div>
+          <div class="card-serial" id="cardserial">SA-0001-A</div>
+          <div class="card-qr" id="cardqr"></div>
+          <img class="card-seal" src="assets/seal-brass.png" alt="" aria-hidden="true">
+          <img class="card-stamp" src="assets/stamp-ink.png" alt="" aria-hidden="true">
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-ctrl">
+      <div class="studio">
+        <label for="shopname">اكتب اسم محلّك وشاهد بطاقتك تُصدر الآن</label>
+        <input id="shopname" type="text" value="مغسلة الصفا" maxlength="26" autocomplete="off" spellcheck="false">
+        <div class="swatches" role="group" aria-label="لون البطاقة">
+          <button class="swatch" style="background:#C8452D" data-c="#C8452D" aria-pressed="true" aria-label="قرمزي"></button>
+          <button class="swatch" style="background:#10432F" data-c="#10432F" aria-pressed="false" aria-label="أخضر داكن"></button>
+          <button class="swatch" style="background:#1E4E73" data-c="#1E4E73" aria-pressed="false" aria-label="أزرق"></button>
+          <button class="swatch" style="background:#8A6A2E" data-c="#8A6A2E" aria-pressed="false" aria-label="نحاسي"></button>
+          <button class="swatch" style="background:#6B2D5B" data-c="#6B2D5B" aria-pressed="false" aria-label="أرجواني"></button>
+          <button class="swatch" style="background:#2F6B60" data-c="#2F6B60" aria-pressed="false" aria-label="أخضر مزرق"></button>
+          <button class="swatch" style="background:#B2622A" data-c="#B2622A" aria-pressed="false" aria-label="برتقالي محروق"></button>
+          <button class="swatch" style="background:#3B3B3B" data-c="#3B3B3B" aria-pressed="false" aria-label="رمادي فحمي"></button>
+        </div>
+        <p class="hero-note">البطاقات المعروضة توضيحية، وأسماء المحلات فيها للعرض فقط.</p>
+      </div>
+
+      <div class="hero-actions">
+        <button class="btn" id="issueBtn" type="button">أصدر بطاقتك</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cutstrip tissue" id="modes">
+  <div class="wrap">
+    <div class="strip-head">
+      <h2>كيف يكسب عميلك نقاطه</h2>
+      <p>أربع طرق للاحتساب، تختار واحدة عند إنشاء البطاقة، وتبقى قابلة للتعديل بعد النشر دون حذف البطاقة أو فقدان عملائها.</p>
+    </div>
+    <div class="views">
+      <article class="view">
+        <span class="ltr" aria-hidden="true">أ</span>
+        <figure data-diagram="riyal"></figure>
+        <h3>نقطة لكل ريال</h3>
+        <p>تُحتسب النقاط من قيمة الفاتورة مضروبة في المعدّل، ثم تُقرّب للأسفل.</p>
+        <dl><dt>المعدّل</dt><dd>نقاط لكل ريال</dd><dt>حد أدنى</dt><dd>للشراء المحتسب</dd><dt>الصلاحية</dt><dd>بلا انتهاء، أو 90 يوماً، أو 6 أشهر، أو سنة، أو سنتان</dd></dl>
+      </article>
+      <article class="view">
+        <span class="ltr" aria-hidden="true">ب</span>
+        <figure data-diagram="visit"></figure>
+        <h3>نقاط لكل زيارة</h3>
+        <p>عدد ثابت من النقاط لكل زيارة، مهما كانت قيمة الفاتورة.</p>
+        <dl><dt>الثابت</dt><dd>نقاط لكل زيارة</dd><dt>يناسب</dt><dd>الخدمات لا السلع</dd></dl>
+      </article>
+      <article class="view">
+        <span class="ltr" aria-hidden="true">ج</span>
+        <figure data-diagram="stamp"></figure>
+        <h3>اشترِ ٥ واحصل على السادس</h3>
+        <p>خمسة أختام ثم مكافأة مجانية، ويعود العدّاد إلى الصفر تلقائياً.</p>
+        <dl><dt>الأختام</dt><dd>لكل بطاقة</dd><dt>صورة</dt><dd>لكل موضع ختم</dd></dl>
+      </article>
+      <article class="view">
+        <span class="ltr" aria-hidden="true">د</span>
+        <figure data-diagram="manual"></figure>
+        <h3>يدوي</h3>
+        <p>الموظف يُدخل المبلغ بنفسه، للحالات التي لا تنضبط بقاعدة واحدة.</p>
+        <dl><dt>الصلاحية</dt><dd>تُمنح للموظف</dd><dt>السجل</dt><dd>كل عملية مسجّلة</dd></dl>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="anatomy" id="anatomy">
+  <div class="wrap">
+    <h2>ماذا يحمل الكرت فعلياً</h2>
+    <p class="sub">ما تراه هنا هو ما يصل إلى محفظة عميلك، حرفياً: نفس الألوان، ونفس الحقول، ونفس الترتيب.</p>
+    <div class="anat-grid">
+      <div class="anat-fig">
+        <div class="issued" style="position:relative; inset:auto; translate:none; inline-size:min(100%,520px); margin-inline:auto">
+          <div class="card-face">
+            <span class="rule-o"></span><span class="rule-i"></span>
+            <div class="card-rose" id="cardrose2"></div>
+            <div class="card-name" id="cardname2">مغسلة الصفا</div>
+            <div class="card-slot"></div>
+            <div class="card-band"><span class="cb-label">الرصيد</span><span class="cb-value">240 نقطة</span></div>
+            <div class="card-stamps" id="cardstamps2"></div>
+            <div class="card-next">حتى المكافأة: <b>عمليتان</b></div>
+            <div class="card-serial">SA-0001-A</div>
+            <div class="card-qr" id="cardqr2"></div>
+            <img class="card-seal" src="assets/seal-brass.png" alt="" aria-hidden="true">
+          </div>
+        </div>
+      </div>
+      <ol class="anat-list">
+        <li><span class="num">١</span><div><h3>شعار المحل</h3><p>صورة مربّعة ٥١٢×٥١٢، تظهر كما هي داخل المحفظة.</p></div></li>
+        <li><span class="num">٢</span><div><h3>لون البطاقة ولون النص</h3><p>لونان تختارهما من الأسطح، أو تُدخل رمز اللون مباشرة.</p></div></li>
+        <li><span class="num">٣</span><div><h3>اسم الرصيد</h3><p>«نقاط» أو «نجوم» أو «رصيد»؛ التسمية تخصّك أنت.</p></div></li>
+        <li><span class="num">٤</span><div><h3>رقم العميل ورمز المسح</h3><p>يمسحه الكاشير لإضافة النقاط أو استبدال المكافأة.</p></div></li>
+        <li><span class="num">٥</span><div><h3>الحقول الخلفية</h3><p>حتى عشرة حقول: الموقع، الحسابات، القائمة، رقم التواصل.</p></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="wallet" id="wallet">
+  <div class="wrap">
+    <div>
+      <h2>تعيش داخل المحفظة، لا داخل تطبيق</h2>
+      <p>تُضاف البطاقة إلى Apple Wallet أو Google Wallet من مسح رمز واحد. عميلك لا يُنزّل شيئاً، ولا ينشئ حساباً، ولا يتذكّر كلمة مرور.</p>
+      <ul class="wallet-points">
+        <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5l4 4 8-9" stroke="#E3C382" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>الرصيد والأختام تُحدَّث فوراً على البطاقة داخل جواله.</span></li>
+        <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5l4 4 8-9" stroke="#E3C382" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>الإشعار يصل على البطاقة نفسها، لعرض جديد أو لعميل غاب طويلاً.</span></li>
+        <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5l4 4 8-9" stroke="#E3C382" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>كل إضافة أو استبدال مسجّل في السجل، وقابل للإلغاء.</span></li>
+        <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5l4 4 8-9" stroke="#E3C382" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>لوحة تحكم تعمل على المتصفح، تُدير برنامجك من المكتب لا من الجوال وحده.</span></li>
+      </ul>
+    </div>
+    <figure class="phone-fig">
+      <img src="assets/phone-pass-3d.png" alt="بطاقة ولاء داخل محفظة الجوال تعرض الرصيد والمكافأة القادمة ورمز المسح.">
+    </figure>
+  </div>
+</section>
+
+<section class="counter">
+  <div class="band">
+    <img class="scene" src="assets/counter-scene-3d.png" alt="طرف كاونتر عليه جهاز مسح وجوال يعرض بطاقة الولاء.">
+    <div class="overlay">
+      <div class="wrap">
+        <h2>مسحة واحدة عند الكاشير</h2>
+        <ol class="steps">
+          <li><b>يفتح البطاقة</b><span>من محفظة جواله، دون بحث.</span></li>
+          <li><b>يمسحها الموظف</b><span>من التطبيق، بصلاحية تمنحها له.</span></li>
+          <li><b>تُضاف النقاط</b><span>أو تُستبدل المكافأة.</span></li>
+          <li><b>تتحدّث البطاقة</b><span>في جواله فوراً.</span></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tiers paper" id="tiers">
+  <div class="wrap">
+    <h2>الباقات، كخطوط تدريج على شكل واحد</h2>
+    <p class="sub">نفس البطاقة ونفس المحرّك. ما يتغيّر هو المقاس: كم بطاقة، وكم موظفاً، وكم فرعاً.</p>
+    <div class="grade">
+      <div id="gradefig"></div>
+      <ol class="grade-list">
+        <li class="g-1">
+          <h3>المقاس الأصغر</h3>
+          <p>بطاقة واحدة · 50 عميلاً · موظف واحد · بلا فروع.</p>
+          <p class="g-note">لوحة تحكم المتصفح متاحة من هذا المقاس.</p>
+        </li>
+        <li class="g-2">
+          <h3>المقاس المتوسط</h3>
+          <p>بطاقات وعملاء بلا حد · حتى 4 موظفين · فرعان · تصدير PDF و CSV.</p>
+          <p class="g-note">التحليلات والتصدير، إشعارات المحفظة، والواجهة البرمجية.</p>
+          <p class="g-price">‏49 ر.س شهرياً تقريباً — رقم مبدئي للعرض، غير معتمد.</p>
+        </li>
+        <li class="g-3">
+          <h3>المقاس الكامل</h3>
+          <p>كل ما سبق بلا حدود · موظفون وفروع بلا حد.</p>
+          <p class="g-note">مقارنة الفروع في التحليلات، ومهام الويب.</p>
+        </li>
+      </ol>
+    </div>
+    <p class="placeholder">لم يُعتمد شيء من هذه المقاسات بعد: لا الحدود ولا الأسعار. الأرقام هنا مقترح مبدئي قابل للتغيير بالكامل.</p>
+  </div>
+</section>
+
+<section class="close">
+  <div class="wrap">
+    <img class="close-stack" src="assets/hero-stack-3d.png" alt="ثلاث بطاقات ولاء بثلاثة ألوان مختلفة، لثلاثة محلات.">
+    <h2>أصدر بطاقتك الأولى</h2>
+    <p>اكتب اسم محلّك، اختر لونه، وشاهد البطاقة التي سيحملها عملاؤك.</p>
+    <a class="btn" href="#issue">جرّب بطاقتك</a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>بطاقتي — بطاقات ولاء داخل محفظة الجوال</span>
+    <span>صفحة عرض · المحتوى التوضيحي ليس بيانات حقيقية</span>
+  </div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const SVGNS = "http://www.w3.org/2000/svg";
+
+  /* Engine-turned rosette, drawn from a colour. Two-frequency rose curve,
+     seeded per shop so no two shops share a security pattern. */
+  function rosette(color, seed, size = 240, lines = 78, opacity = .55, tight = false){
+    const svg = document.createElementNS(SVGNS,"svg");
+    svg.setAttribute("viewBox", `0 0 ${size} ${size}`);
+    svg.setAttribute("width","100%"); svg.setAttribute("height","100%");
+    svg.setAttribute("aria-hidden","true");
+    const R = size/2, cx = R, cy = R;
+    // A true guilloche is an EPITROCHOID family whose successive curves cross one
+    // another; the interference lattice those crossings make is the whole effect.
+    // A small ripple on a circle can never cross itself, so it can only ever look
+    // like a flower — that was the earlier bug, and it is why r2 is large here.
+    const k  = (tight ? 13 : 7) + (seed % 7);  // lobes per revolution
+    const r1 = R * (tight ? 0.52 : 0.60);      // carrier radius
+    const r2 = R * (tight ? 0.26 : 0.34);      // excursion: still crosses, but finer at scale
+    const frag = document.createDocumentFragment();
+    for(let i=0;i<lines;i++){
+      const f     = i/lines;
+      const phase = f * Math.PI * 2;           // spins the lobes into the lattice
+      const swell = 1 - 0.30 * f;              // family contracts inward
+      let d = "";
+      for(let t=0;t<=Math.PI*2+0.001;t+=Math.PI/150){
+        const x = cx + swell*(r1*Math.cos(t) + r2*Math.cos(k*t + phase));
+        const y = cy + swell*(r1*Math.sin(t) - r2*Math.sin(k*t + phase));
+        d += (t===0 ? "M" : "L") + x.toFixed(2) + " " + y.toFixed(2);
+      }
+      const p = document.createElementNS(SVGNS,"path");
+      p.setAttribute("d", d + "Z");
+      p.setAttribute("fill","none");
+      p.setAttribute("stroke", color);
+      p.setAttribute("stroke-width", (0.75 - 0.25*f).toFixed(2));
+      p.setAttribute("opacity", (opacity * (0.85 - 0.35*f)).toFixed(3));
+      frag.appendChild(p);
+    }
+    svg.appendChild(frag);
+    return svg;
+  }
+
+  /* A QR-shaped block. Deliberately a fixed decorative pattern, not a
+     scannable code — the page never pretends to encode a real link. */
+  function qrBlock(color, seed, mod = 21){
+    const svg = document.createElementNS(SVGNS,"svg");
+    svg.setAttribute("viewBox", `0 0 ${mod} ${mod}`);
+    svg.setAttribute("width","100%"); svg.setAttribute("height","100%");
+    svg.setAttribute("aria-hidden","true");
+    let s = seed || 1;
+    const rnd = () => (s = (s * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
+    const rect = (x,y,w,fill) => { const r=document.createElementNS(SVGNS,"rect");
+      r.setAttribute("x",x); r.setAttribute("y",y); r.setAttribute("width",w); r.setAttribute("height",w);
+      r.setAttribute("fill",fill); svg.appendChild(r); };
+    for(let y=0;y<mod;y++) for(let x=0;x<mod;x++){
+      if((x<8&&y<8)||(x>mod-9&&y<8)||(x<8&&y>mod-9)) continue;
+      if(rnd() > .55) rect(x,y,1,color);
+    }
+    [[0,0],[mod-7,0],[0,mod-7]].forEach(([x,y]) => { rect(x,y,7,color); rect(x+1,y+1,5,"#F2E9D8"); rect(x+2,y+2,3,color); });
+    return svg;
+  }
+
+  /* Twelve real trades, twelve liveries. Illustrative names, labelled as such. */
+  const TRADES = [
+    ["مغسلة الصفا","#1E4E73"], ["مقهى الرصيف","#8A4B24"], ["صالون لمسة","#6B2D5B"],
+    ["حلاق الحيّ","#2F6B60"], ["مطعم السنبلة","#B2622A"], ["صيدلية النخيل","#10432F"],
+    ["مخبز التنّور","#A8762B"], ["عطور المسك","#4A3A6B"], ["ورشة الإتقان","#3B3B3B"],
+    ["زهور الواحة","#B03A57"], ["حلويات القصر","#C8452D"], ["نظارات الرؤية","#20566B"]
+  ];
+  const wall = document.getElementById("wall");
+  TRADES.forEach(([name,color], i) => {
+    const t = document.createElement("div");
+    t.className = "tile";
+    const rose = document.createElement("div"); rose.className = "rose";
+    rose.appendChild(rosette(color, i+3, 200, 52, .95));
+    const band = document.createElement("div"); band.className = "band"; band.style.background = color;
+    const nm = document.createElement("div"); nm.className = "nm"; nm.textContent = name;
+    const qr = document.createElement("div"); qr.className = "qr";
+    qr.appendChild(qrBlock("#14100C", i*7+11, 13));
+    t.append(rose, band, nm, qr);
+    wall.appendChild(t);
+  });
+
+  const face   = document.getElementById("cardface");
+  const roseEl = document.getElementById("cardrose");
+  const nameEl = document.getElementById("cardname");
+  const qrEl   = document.getElementById("cardqr");
+  const serial = document.getElementById("cardserial");
+  const input  = document.getElementById("shopname");
+  const swatches = [...document.querySelectorAll(".swatch")];
+  const rose2 = document.getElementById("cardrose2");
+  const name2 = document.getElementById("cardname2");
+  const qr2   = document.getElementById("cardqr2");
+
+  let shopColor = "#C8452D";
+  let seedN = 7;
+
+  function serialFor(name){
+    let h = 0; for(const ch of name) h = (h*31 + ch.charCodeAt(0)) & 0xffff;
+    return "SA-" + String(h % 9000 + 1000) + "-" + "ABCDEFGH"[h % 8];
+  }
+
+  function reissue(animate){
+    document.documentElement.style.setProperty("--shop", shopColor);
+    const name = (input.value || "").trim() || "محلّي";
+    nameEl.textContent = name;
+    if(name2) name2.textContent = name;
+    serial.textContent = serialFor(name);
+
+    roseEl.replaceChildren(rosette(shopColor, seedN, 240, 160, .55, true));
+    qrEl.replaceChildren(qrBlock("#14100C", seedN*13+5, 21));
+    if(rose2) rose2.replaceChildren(rosette(shopColor, seedN, 240, 160, .55, true));
+    if(qr2)   qr2.replaceChildren(qrBlock("#14100C", seedN*13+5, 21));
+
+    // The stamp row is the loyalty itself; a card without it is a certificate.
+    document.querySelectorAll(".card-stamps").forEach(row => {
+      row.replaceChildren(...Array.from({length:5}, (_, i) => {
+        const dot = document.createElement("i");
+        if(i < 3) dot.className = "on";
+        return dot;
+      }));
+    });
+
+    if(animate){
+      face.classList.remove("reissuing");
+      void face.offsetWidth;
+      face.classList.add("reissuing");
+    }
+  }
+
+  swatches.forEach(btn => btn.addEventListener("click", () => {
+    swatches.forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
+    shopColor = btn.dataset.c;
+    seedN = (seedN * 7 + 3) % 97;
+    reissue(true);
+  }));
+
+  let typing;
+  input.addEventListener("input", () => {
+    clearTimeout(typing);
+    typing = setTimeout(() => reissue(false), 90);
+  });
+
+  // The one vermillion action drives the studio itself; the conversion IS
+  // designing the card, so the button must not send the visitor elsewhere.
+  document.getElementById("issueBtn").addEventListener("click", () => {
+    input.focus();
+    input.select();
+    reissue(true);
+    document.getElementById("issued").scrollIntoView({block:"center", behavior:"smooth"});
+  });
+
+  reissue(false);
+
+  /* The four pattern views, drawn as real rules rather than icons. */
+  function diagram(kind){
+    const s = document.createElementNS(SVGNS,"svg");
+    s.setAttribute("viewBox","0 0 160 92");
+    s.setAttribute("width","100%"); s.setAttribute("aria-hidden","true");
+    const ink = "#14100C", red = "#C8452D";
+    const add = (tag, attrs) => { const e = document.createElementNS(SVGNS,tag);
+      for(const k in attrs) e.setAttribute(k, attrs[k]); s.appendChild(e); return e; };
+    add("rect",{x:4,y:4,width:152,height:84,fill:"none",stroke:ink,"stroke-opacity":".28","stroke-dasharray":"4 3"});
+    if(kind === "riyal"){
+      for(let i=0;i<5;i++) add("rect",{x:14+i*26,y:62-i*9,width:16,height:12+i*9,fill:red,"fill-opacity":(.25+i*.14).toFixed(2)});
+      add("path",{d:"M12 76 L148 76",stroke:ink,"stroke-width":"1"});
+      add("path",{d:"M12 24 L52 24",stroke:ink,"stroke-width":"1","stroke-dasharray":"3 3"});
+    } else if(kind === "visit"){
+      for(let i=0;i<5;i++) add("rect",{x:14+i*26,y:40,width:16,height:28,fill:red,"fill-opacity":".55"});
+      add("path",{d:"M12 76 L148 76",stroke:ink,"stroke-width":"1"});
+    } else if(kind === "stamp"){
+      for(let i=0;i<6;i++){
+        const filled = i < 5;
+        add("circle",{cx:22+i*23,cy:46,r:9,fill:filled?red:"none","fill-opacity":filled?".8":"0",
+          stroke:ink,"stroke-width":"1","stroke-dasharray":filled?"0":"3 2"});
+      }
+    } else {
+      add("rect",{x:34,y:30,width:92,height:32,fill:"none",stroke:ink,"stroke-width":"1"});
+      add("path",{d:"M44 46 L116 46",stroke:red,"stroke-width":"2"});
+      add("path",{d:"M80 20 L80 30 M80 62 L80 72",stroke:ink,"stroke-width":"1","stroke-dasharray":"3 2"});
+    }
+    return s;
+  }
+  document.querySelectorAll("[data-diagram]").forEach(f => f.appendChild(diagram(f.dataset.diagram)));
+
+  /* Tiers as nested graded cut lines on one shape. */
+  (function grades(){
+    const host = document.getElementById("gradefig");
+    if(!host) return;
+    const s = document.createElementNS(SVGNS,"svg");
+    s.setAttribute("viewBox","0 0 320 210");
+    s.setAttribute("width","100%"); s.setAttribute("role","img");
+    s.setAttribute("aria-label","ثلاثة خطوط تدريج متداخلة تمثل الباقات الثلاث على شكل بطاقة واحدة.");
+    [{inset:56, stroke:"#4A423A", dash:"5 4", label:"مجاني"},
+     {inset:30, stroke:"#C8452D", dash:"8 5", label:"احترافي"},
+     {inset:6,  stroke:"#8A6A2E", dash:"0",   label:"أعمال"}].forEach(sp => {
+      const r = document.createElementNS(SVGNS,"rect");
+      r.setAttribute("x", sp.inset); r.setAttribute("y", sp.inset*0.62);
+      r.setAttribute("width", 320 - sp.inset*2); r.setAttribute("height", 210 - sp.inset*1.24);
+      r.setAttribute("rx","8"); r.setAttribute("fill","none");
+      r.setAttribute("stroke", sp.stroke); r.setAttribute("stroke-width","1.4");
+      if(sp.dash !== "0") r.setAttribute("stroke-dasharray", sp.dash);
+      s.appendChild(r);
+      const t = document.createElementNS(SVGNS,"text");
+      t.setAttribute("x", 320 - sp.inset - 6); t.setAttribute("y", sp.inset*0.62 - 5);
+      t.setAttribute("text-anchor","end");
+      t.setAttribute("font-family","Noto Kufi Arabic, sans-serif");
+      t.setAttribute("font-size","11"); t.setAttribute("fill", sp.stroke);
+      t.textContent = sp.label;
+      s.appendChild(t);
+    });
+    host.appendChild(s);
+  })();
+})();
+</script>
+</body>
+</html>
